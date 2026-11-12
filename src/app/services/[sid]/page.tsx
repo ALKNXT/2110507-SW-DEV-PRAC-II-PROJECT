@@ -4,6 +4,7 @@ import getService from "@/libs/getService";
 import { currentUser } from "@/libs/authSession";
 import { ApiError } from "@/libs/apiRequest";
 import DeleteButton from "@/components/DeleteButton";
+import ServiceImage from "@/components/ServiceImage";
 
 export default async function ServiceDetails({ params }: {
     params: Promise<{ sid: string }>;
@@ -30,6 +31,7 @@ export default async function ServiceDetails({ params }: {
         <section className="service-detail">
             <Link href="/">← Service packages</Link>
             <article className="panel">
+                <ServiceImage service={service} detail />
                 <h1>{service.name}</h1>
                 <p className="service-detail-description">{service.description}</p>
                 <div className="spec">

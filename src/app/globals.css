@@ -18,7 +18,12 @@ h2 { font-size: 1.35rem; line-height: 1.4; }
 .bar h1 { margin: 0; }
 .cards { display: grid; grid-template-columns: repeat(auto-fit,minmax(min(100%,290px),1fr)); gap: 1rem; }
 .service-cards { grid-auto-rows: 1fr; }
-.service-card { display: flex; flex-direction: column; }
+.panel.service-card { display: flex; flex-direction: column; padding: 0; overflow: hidden; }
+.service-card > .service-photo { margin: 0; border-radius: 0; flex-shrink: 0; }
+.service-card-body { display: flex; flex-direction: column; flex: 1; padding: clamp(1.25rem,3vw,2rem); }
+.service-photo { position: relative; width: 100%; aspect-ratio: 3 / 2; overflow: hidden; border-radius: 8px; background: #e2ebe7; margin-bottom: 1.25rem; }
+.service-photo img { object-fit: cover; }
+.service-photo-detail { aspect-ratio: 16 / 10; }
 .service-description { min-height: 3.2em; display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 2; overflow: hidden; }
 .service-card-footer { margin-top: auto; }
 .service-detail { max-width: 760px; margin: auto; }
