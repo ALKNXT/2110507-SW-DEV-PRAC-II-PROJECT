@@ -26,7 +26,7 @@ export default async function Catalog({ searchParams }: PageProps<"/">) {
                 <form className="search">
                     <input aria-label="Search services" name="q" defaultValue={query}
                         placeholder="Search by service name or description" />
-                    <button>Search</button>
+                    <button type="submit">Search</button>
                 </form>
                 {user?.role === "admin" && (
                     <Link className="primary" href="/services/edit">Add package</Link>
