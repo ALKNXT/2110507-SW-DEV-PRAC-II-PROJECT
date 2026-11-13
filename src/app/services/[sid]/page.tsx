@@ -28,30 +28,32 @@ export default async function ServiceDetails({ params }: {
     const user = await currentUser();
 
     return (
-        <section className="service-detail">
-            <Link href="/">← Service packages</Link>
-            <article className="panel">
+        <section className="mx-auto max-w-[760px] [&>a]:mb-4 [&>a]:inline-block">
+            <Link className="text-teal underline underline-offset-[.2em]" href="/">← Service packages</Link>
+            <article className="overflow-hidden rounded-xl border border-line bg-white [overflow-wrap:anywhere]">
                 <ServiceImage service={service} detail />
-                <h1>{service.name}</h1>
-                <p className="service-detail-description">{service.description}</p>
-                <div className="spec">
-                    <strong>THB {service.serviceFee.toLocaleString("en-US")}</strong>
-                    <span>{service.estimatedDuration} minutes</span>
+                <div className="p-[clamp(1.25rem,3vw,2rem)]">
+                    <h1 className="mb-4 font-bold text-[clamp(1.85rem,4vw,3.15rem)] leading-[1.25]">{service.name}</h1>
+                    <p className="mb-4 whitespace-pre-wrap">{service.description}</p>
+                    <div className="flex flex-wrap items-center gap-4 justify-between border-t border-line py-4 [&>strong]:text-[1.4rem]">
+                        <strong>THB {service.serviceFee.toLocaleString("en-US")}</strong>
+                        <span>{service.estimatedDuration} minutes</span>
+                    </div>
+                    {user?.role === "admin" ? (
+                        <>
+                            <small className="text-[#45615a]">ID {service._id}</small>
+                            <div className="flex flex-wrap items-center gap-4 mt-4">
+                                <Link className="text-teal underline underline-offset-[.2em]" href={`/services/edit?id=${service._id}`}>Edit package</Link>
+                                <DeleteButton collection="services" id={service._id} name={service.name} />
+                            </div>
+                        </>
+                    ) : (
+                        <Link className="inline-block cursor-pointer rounded-[7px] px-4 py-[.52rem] font-[650] no-underline disabled:cursor-wait disabled:opacity-60 border-0 bg-teal text-white"
+                            href={user ? `/appointments/edit?service=${service._id}` : "/login"}>
+                            {user ? "Book a service" : "Sign in to book"}
+                        </Link>
+                    )}
                 </div>
-                {user?.role === "admin" ? (
-                    <>
-                        <small>ID {service._id}</small>
-                        <div className="actions">
-                            <Link href={`/services/edit?id=${service._id}`}>Edit package</Link>
-                            <DeleteButton collection="services" id={service._id} name={service.name} />
-                        </div>
-                    </>
-                ) : (
-                    <Link className="primary"
-                        href={user ? `/appointments/edit?service=${service._id}` : "/login"}>
-                        {user ? "Book a service" : "Sign in to book"}
-                    </Link>
-                )}
             </article>
         </section>
     );

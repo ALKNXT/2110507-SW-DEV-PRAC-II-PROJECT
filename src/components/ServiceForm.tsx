@@ -54,7 +54,7 @@ export default function ServiceForm({ service }: { service: ServiceItem | null }
     }
 
     return (
-        <form onSubmit={saveService} className="panel form">
+        <form onSubmit={saveService} className="rounded-xl border border-line bg-white p-[clamp(1.25rem,3vw,2rem)] [overflow-wrap:anywhere] mb-4 grid gap-4">
             <TextField label="Service name" name="name" value={name}
                 onChange={event => setName(event.target.value)} required fullWidth />
             <TextField label="Description" name="description" value={description}

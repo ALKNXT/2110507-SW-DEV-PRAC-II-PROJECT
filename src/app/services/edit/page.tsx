@@ -27,9 +27,9 @@ export default async function ServiceEditor({ searchParams }: PageProps<"/servic
     }
 
     return (
-        <section className="narrow">
-            <Link href="/">← Service packages</Link>
-            <h1>{service ? "Edit package" : "Add package"}</h1>
+        <section className="mx-auto max-w-[550px] [&>h1]:mt-3 [&>h1]:mb-5">
+            <Link className="text-teal underline underline-offset-[.2em]" href="/">← Service packages</Link>
+            <h1 className="mb-4 font-bold text-[clamp(1.85rem,4vw,3.15rem)] leading-[1.25]">{service ? "Edit package" : "Add package"}</h1>
             <ServiceForm service={service} />
         </section>
     );
