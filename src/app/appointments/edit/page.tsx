@@ -33,15 +33,15 @@ export default async function AppointmentEditor({ searchParams }: PageProps<"/ap
     }
 
     return (
-        <section className="narrow">
-            <Link href={editing ? "/appointments" : "/"}>← Back</Link>
-            <h1>{editing ? "Edit appointment" : "Book an appointment"}</h1>
+        <section className="mx-auto max-w-[550px] [&>h1]:mt-3 [&>h1]:mb-5">
+            <Link className="text-teal underline underline-offset-[.2em]" href={editing ? "/appointments" : "/"}>← Back</Link>
+            <h1 className="mb-4 font-bold text-[clamp(1.85rem,4vw,3.15rem)] leading-[1.25]">{editing ? "Edit appointment" : "Book an appointment"}</h1>
             {services.length ? (
                 <AppointmentForm services={services} appointment={appointment}
                     initialService={typeof service === "string" ? service : ""}
                     today={new Date().toISOString().slice(0, 10)} />
             ) : (
-                <p className="panel">No service packages are currently available.</p>
+                <p className="mb-4 rounded-xl border border-line bg-white p-[clamp(1.25rem,3vw,2rem)] [overflow-wrap:anywhere]">No service packages are currently available.</p>
             )}
         </section>
     );

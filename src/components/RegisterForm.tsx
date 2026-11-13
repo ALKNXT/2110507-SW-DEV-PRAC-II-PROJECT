@@ -33,7 +33,7 @@ export default function RegisterForm() {
     }
 
     return (
-        <form onSubmit={register} className="panel form">
+        <form onSubmit={register} className="rounded-xl border border-line bg-white p-[clamp(1.25rem,3vw,2rem)] [overflow-wrap:anywhere] mb-4 grid gap-4">
             <TextField label="Name" name="name" autoComplete="name"
                 value={name} onChange={event => setName(event.target.value)} required fullWidth />
             <TextField label="Email" name="email" type="email" autoComplete="email"

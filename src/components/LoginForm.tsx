@@ -43,7 +43,7 @@ export default function LoginForm() {
     }
 
     return (
-        <form onSubmit={logIn} className="panel form">
+        <form onSubmit={logIn} className="rounded-xl border border-line bg-white p-[clamp(1.25rem,3vw,2rem)] [overflow-wrap:anywhere] mb-4 grid gap-4">
             <TextField label="Email" name="email" type="email" autoComplete="username"
                 value={email} onChange={event => setEmail(event.target.value)} required fullWidth />
             <TextField label="Password" name="password" type="password" autoComplete="current-password"

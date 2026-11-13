@@ -80,7 +80,7 @@ export default function AppointmentForm({ services, appointment, initialService,
     }
 
     return (
-        <form onSubmit={saveAppointment} className="panel form">
+        <form onSubmit={saveAppointment} className="rounded-xl border border-line bg-white p-[clamp(1.25rem,3vw,2rem)] [overflow-wrap:anywhere] mb-4 grid gap-4">
             <FormControl fullWidth required>
                 <InputLabel id="service-label">Service package</InputLabel>
                 <Select name="service" labelId="service-label" label="Service package"
@@ -97,13 +97,13 @@ export default function AppointmentForm({ services, appointment, initialService,
             )}
             <TextField label="Registration number" name="registrationNumber" value={registrationNumber}
                 onChange={event => setRegistrationNumber(event.target.value)} required fullWidth />
-            <div className="pair">
+            <div className="grid grid-cols-2 gap-[.8rem] max-[600px]:grid-cols-1">
                 <TextField label="Brand" name="brand" value={brand}
                     onChange={event => setBrand(event.target.value)} required fullWidth />
                 <TextField label="Model" name="model" value={model}
                     onChange={event => setModel(event.target.value)} required fullWidth />
             </div>
-            <div className="pair">
+            <div className="grid grid-cols-2 gap-[.8rem] max-[600px]:grid-cols-1">
                 <LocalizationProvider dateAdapter={AdapterDayjs}>
                     <DatePicker label="Date (UTC)" value={date} minDate={dayjs(today)}
                         onChange={value => setDate(value)}
@@ -113,8 +113,8 @@ export default function AppointmentForm({ services, appointment, initialService,
                     slotProps={{ inputLabel: { shrink: true } }}
                     onChange={event => setTime(event.target.value)} required fullWidth />
             </div>
-            <small>Thailand is 7 hours ahead of UTC. For example, 03:00 UTC is 10:00 in Thailand.</small>
-            <small>One appointment per vehicle per day. Vehicle appointments cannot overlap. Members can have up to 3 future appointments.</small>
+            <small className="text-[#45615a]">Thailand is 7 hours ahead of UTC. For example, 03:00 UTC is 10:00 in Thailand.</small>
+            <small className="text-[#45615a]">One appointment per vehicle per day. Vehicle appointments cannot overlap. Members can have up to 3 future appointments.</small>
             {error && <Alert severity="error">{error}</Alert>}
             <Button type="submit" variant="contained" disabled={busy}>
                 {busy ? "Saving…" : appointment ? "Save changes" : "Confirm booking"}

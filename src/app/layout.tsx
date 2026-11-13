@@ -18,11 +18,11 @@ export default async function RootLayout({ children }: { children: React.ReactNo
     ]);
 
     return (
-        <html lang="en">
-            <body>
+        <html lang="en" className="scheme-light">
+            <body className="m-0 bg-[#f4f7f5] font-sans text-base leading-[1.6] text-ink [&_:focus-visible]:outline-3 [&_:focus-visible]:outline-offset-3 [&_:focus-visible]:outline-[#008f82]">
                 <NextAuthProvider session={session}>
                     <TopMenu user={user} />
-                    <main>{children}</main>
+                    <main className="mx-auto w-[min(1120px,92vw)] pt-[clamp(1.2rem,4vw,3rem)] pb-20">{children}</main>
                 </NextAuthProvider>
             </body>
         </html>
