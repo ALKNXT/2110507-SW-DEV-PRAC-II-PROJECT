@@ -7,6 +7,7 @@ import getServices from "@/libs/getServices";
 import getAppointment from "@/libs/getAppointment";
 import { ApiError } from "@/libs/apiRequest";
 import AppointmentForm from "@/components/AppointmentForm";
+import { getTodayInThailand } from "@/libs/appointmentTime";
 import type { AppointmentItem } from "../../../../interface";
 
 export default async function AppointmentEditor({ searchParams }: PageProps<"/appointments/edit">) {
@@ -39,7 +40,7 @@ export default async function AppointmentEditor({ searchParams }: PageProps<"/ap
             {services.length ? (
                 <AppointmentForm services={services} appointment={appointment}
                     initialService={typeof service === "string" ? service : ""}
-                    today={new Date().toISOString().slice(0, 10)} />
+                    today={getTodayInThailand()} />
             ) : (
                 <p className="mb-4 rounded-xl border border-line bg-white p-[clamp(1.25rem,3vw,2rem)] [overflow-wrap:anywhere]">No service packages are currently available.</p>
             )}

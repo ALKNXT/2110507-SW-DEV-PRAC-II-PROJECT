@@ -17,6 +17,7 @@ import dayjs, { type Dayjs } from "dayjs";
 import createAppointment from "@/libs/createAppointment";
 import updateAppointment from "@/libs/updateAppointment";
 import getErrorMessage from "@/libs/getErrorMessage";
+import { toThaiAppointmentTime, toUtcAppointmentTime } from "@/libs/appointmentTime";
 import type { ServiceItem, AppointmentItem } from "../../interface";
 
 export default function AppointmentForm({ services, appointment, initialService, today }: {
@@ -29,14 +30,17 @@ export default function AppointmentForm({ services, appointment, initialService,
     const { data: session } = useSession();
     const selectedService = appointment?.service._id || initialService;
     const activeService = services.some(item => item._id === selectedService);
+    const localAppointment = appointment
+        ? toThaiAppointmentTime(appointment.appointmentDate, appointment.startTime)
+        : null;
     const [service, setService] = useState(activeService ? selectedService : "");
     const [registrationNumber, setRegistrationNumber] = useState(appointment?.registrationNumber || "");
     const [brand, setBrand] = useState(appointment?.brand || "");
     const [model, setModel] = useState(appointment?.model || "");
     const [date, setDate] = useState<Dayjs | null>(
-        appointment ? dayjs(appointment.appointmentDate.slice(0, 10)) : null
+        localAppointment ? dayjs(localAppointment.appointmentDate) : null
     );
-    const [time, setTime] = useState(appointment?.startTime || "");
+    const [time, setTime] = useState(localAppointment?.startTime || "");
     const [error, setError] = useState("");
     const [busy, setBusy] = useState(false);
 
@@ -60,8 +64,7 @@ export default function AppointmentForm({ services, appointment, initialService,
                 registrationNumber: registrationNumber.trim(),
                 brand: brand.trim(),
                 model: model.trim(),
-                appointmentDate: date.format("YYYY-MM-DD"),
-                startTime: time,
+                ...toUtcAppointmentTime(date.format("YYYY-MM-DD"), time),
             };
 
             if (appointment) {
@@ -105,15 +108,14 @@ export default function AppointmentForm({ services, appointment, initialService,
             </div>
             <div className="grid grid-cols-2 gap-[.8rem] max-[600px]:grid-cols-1">
                 <LocalizationProvider dateAdapter={AdapterDayjs}>
-                    <DatePicker label="Date (UTC)" value={date} minDate={dayjs(today)}
+                    <DatePicker label="Date" value={date} minDate={dayjs(today)}
                         onChange={value => setDate(value)}
                         slotProps={{ textField: { required: true, fullWidth: true } }} />
                 </LocalizationProvider>
-                <TextField label="Start time (UTC)" name="startTime" type="time" value={time}
+                <TextField label="Start time" name="startTime" type="time" value={time}
                     slotProps={{ inputLabel: { shrink: true } }}
                     onChange={event => setTime(event.target.value)} required fullWidth />
             </div>
-            <small className="text-[#45615a]">Thailand is 7 hours ahead of UTC. For example, 03:00 UTC is 10:00 in Thailand.</small>
             <small className="text-[#45615a]">One appointment per vehicle per day. Vehicle appointments cannot overlap. Members can have up to 3 future appointments.</small>
             {error && <Alert severity="error">{error}</Alert>}
             <Button type="submit" variant="contained" disabled={busy}>
